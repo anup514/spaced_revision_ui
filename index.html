@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spaced Revision</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="nav-left">
+                <div class="logo-icon-gradient">
+                    <svg class="logo-waves" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M 20 80 Q 30 70, 40 80 T 60 80 T 80 80" stroke="white" stroke-width="2" fill="none" opacity="0.9"/>
+                        <path d="M 15 85 Q 30 70, 45 85 T 75 85 T 85 85" stroke="white" stroke-width="2" fill="none" opacity="0.7"/>
+                        <path d="M 10 90 Q 30 70, 50 90 T 90 90" stroke="white" stroke-width="2" fill="none" opacity="0.5"/>
+                    </svg>
+                </div>
+                <span class="logo-text">Spaced Revision</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-link active" data-page="courses">Courses</a>
+                <a href="#" class="nav-link" data-page="chat">
+                    Chat
+                    <span class="nav-badge hidden" id="chat-badge">0</span>
+                </a>
+                <a href="#" class="nav-link" data-page="feedback">Feedback</a>
+                <a href="#" class="nav-link" data-page="notifications">
+                    Notifications
+                    <span class="nav-badge hidden" id="notifications-badge">0</span>
+                </a>
+                <a href="#" class="nav-link">Refer & Earn</a>
+            </div>
+            <div class="nav-right">
+                <button id="theme-toggle" class="theme-btn">
+                    <i data-lucide="moon" class="theme-icon"></i>
+                </button>
+                <div class="user-avatar" id="user-avatar">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=User" alt="User Profile" class="avatar-image">
+                    <div class="user-profile-dropdown hidden" id="user-profile-dropdown">
+                        <div class="user-profile-dropdown-header">
+                            <div class="user-profile-dropdown-avatar">
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=User" alt="User Profile">
+                            </div>
+                            <div class="user-profile-dropdown-info">
+                                <div class="user-profile-dropdown-name">Anup Timsina</div>
+                                <div class="user-profile-dropdown-email">anuptimsina514@gmail.com</div>
+                            </div>
+                        </div>
+                        <div class="user-profile-dropdown-divider"></div>
+                        <div class="user-profile-dropdown-menu">
+                            <a href="#" class="user-profile-dropdown-item" data-action="profile">
+                                <i data-lucide="user"></i>
+                                <span>My Profile</span>
+                            </a>
+                            <a href="#" class="user-profile-dropdown-item" data-action="liked-courses">
+                                <i data-lucide="heart"></i>
+                                <span>Liked Courses</span>
+                                <span class="user-profile-dropdown-badge" id="liked-courses-count">0</span>
+                            </a>
+                            <a href="#" class="user-profile-dropdown-item" data-action="settings">
+                                <i data-lucide="settings"></i>
+                                <span>Settings</span>
+                            </a>
+                            <a href="#" class="user-profile-dropdown-item" data-action="help">
+                                <i data-lucide="help-circle"></i>
+                                <span>Help & Support</span>
+                            </a>
+                            <div class="user-profile-dropdown-divider"></div>
+                            <a href="#" class="user-profile-dropdown-item user-profile-dropdown-item-danger" data-action="logout">
+                                <i data-lucide="log-out"></i>
+                                <span>Log Out</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Courses Page -->
+    <main class="main-container page" id="page-courses">
+        <div class="stats-grid">
+            <!-- Revision Queue Card -->
+            <div class="revision-card">
+                <div class="revision-bg-icon">
+                    <i data-lucide="zap"></i>
+                </div>
+                <div class="revision-content">
+                    <div>
+                        <h2 class="revision-title">
+                            <i data-lucide="clock" class="revision-title-icon"></i>
+                            Revision Queue
+                        </h2>
+                        <div class="revision-stats">
+                            <div class="revision-stat-item">
+                                <div class="revision-stat-number" id="flashcards-due">85</div>
+                                <div class="revision-stat-label">Flashcards</div>
+                            </div>
+                            <div class="revision-stat-item revision-stat-border">
+                                <div class="revision-stat-number" id="mcqs-due">42</div>
+                                <div class="revision-stat-label">MCQs Due</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="start-revision-btn">
+                        START REVISION
+                        <i data-lucide="chevron-right" class="btn-icon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Lifetime Mastery Card -->
+            <div class="mastery-card">
+                <div class="mastery-bg-icon">
+                    <i data-lucide="trophy"></i>
+                </div>
+                <div class="mastery-content">
+                    <div class="mastery-header">
+                        <div class="mastery-icon-wrapper">
+                            <i data-lucide="award"></i>
+                        </div>
+                        <h3 class="mastery-title">Lifetime Mastery</h3>
+                    </div>
+                    <div class="mastery-stats">
+                        <div class="mastery-stat-item">
+                            <div class="mastery-stat-header">
+                                <span class="mastery-stat-label">Flashcards Mastery</span>
+                                <span class="mastery-stat-value" id="flashcards-done">1280</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="mastery-stat-item">
+                            <div class="mastery-stat-header">
+                                <span class="mastery-stat-label">MCQ Accuracy</span>
+                                <span class="mastery-stat-value mastery-stat-accent">92%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill progress-fill-accent" style="width: 92%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mastery-footer">
+                        <div class="mastery-rank-icon">
+                            <i data-lucide="trending-up"></i>
+                        </div>
+                        <div>
+                            <div class="mastery-rank-label">Current Rank</div>
+                            <div class="mastery-rank-value">Advanced Aspirant</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Streak Milestone Card -->
+            <div class="streak-card">
+                <div class="streak-bg-icon">
+                    <i data-lucide="flame"></i>
+                </div>
+                <div class="streak-content">
+                    <div class="streak-icon-wrapper">
+                        <i data-lucide="flame" class="streak-flame-icon"></i>
+                    </div>
+                    <div class="streak-number" id="streak-display">12</div>
+                    <div class="streak-label">Day Streak</div>
+                </div>
+                <div class="streak-progress">
+                    <div class="streak-progress-header">
+                        <span>Next Milestone</span>
+                        <span class="streak-progress-target"><span id="next-milestone">15</span> Days</span>
+                    </div>
+                    <div class="streak-progress-bar">
+                        <div class="streak-progress-fill" id="streak-progress-fill"></div>
+                    </div>
+                    <p class="streak-progress-text">Keep it up! 3 days to Gold Badge.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Learning Section -->
+        <section class="my-learning-section">
+            <div class="section-header">
+                <h2 class="section-title">My Learning</h2>
+                <button class="view-all-btn">View All</button>
+            </div>
+            <div class="my-courses-grid" id="my-courses-container">
+                <!-- Course cards will be inserted here by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Community Courses Section -->
+        <section class="community-section">
+            <div class="section-header">
+                <h2 class="section-title">Community Courses</h2>
+            </div>
+            <div class="community-courses-grid" id="community-courses-container">
+                <!-- Course cards will be inserted here by JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Chat Page -->
+    <main class="main-container page hidden" id="page-chat">
+        <div class="chat-container">
+            <div class="chat-sidebar">
+                <h2 class="chat-sidebar-title">My Courses</h2>
+                <div class="chat-course-list" id="chat-course-list">
+                    <!-- Course list will be rendered here -->
+                </div>
+            </div>
+            <div class="chat-main">
+                <div class="chat-empty-state" id="chat-empty-state">
+                    <i data-lucide="message-circle"></i>
+                    <h3>Select a course to start chatting</h3>
+                    <p>Choose a course from the list to view and participate in discussions</p>
+                </div>
+                <div class="chat-interface hidden" id="chat-interface">
+                    <div class="chat-header">
+                        <div class="chat-header-info">
+                            <h3 class="chat-course-title" id="chat-course-title"></h3>
+                            <p class="chat-instructor-name" id="chat-instructor-name"></p>
+                        </div>
+                    </div>
+                    <div class="chat-messages" id="chat-messages">
+                        <!-- Messages will be rendered here -->
+                    </div>
+                    <div class="chat-input-container">
+                        <input type="text" class="chat-input" id="chat-input" placeholder="Type your message...">
+                        <button class="chat-send-btn" id="chat-send-btn">
+                            <i data-lucide="send"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Feedback Page -->
+    <main class="main-container page hidden" id="page-feedback">
+        <div class="feedback-container">
+            <div class="feedback-header">
+                <h1 class="feedback-title">Share Your Feedback</h1>
+                <p class="feedback-subtitle">We'd love to hear from you! Your feedback helps us improve.</p>
+            </div>
+            <form class="feedback-form" id="feedback-form">
+                <div class="feedback-form-group">
+                    <label class="feedback-label">Rating</label>
+                    <div class="feedback-rating" id="feedback-rating">
+                        <button type="button" class="rating-star" data-rating="1">
+                            <i data-lucide="star"></i>
+                        </button>
+                        <button type="button" class="rating-star" data-rating="2">
+                            <i data-lucide="star"></i>
+                        </button>
+                        <button type="button" class="rating-star" data-rating="3">
+                            <i data-lucide="star"></i>
+                        </button>
+                        <button type="button" class="rating-star" data-rating="4">
+                            <i data-lucide="star"></i>
+                        </button>
+                        <button type="button" class="rating-star" data-rating="5">
+                            <i data-lucide="star"></i>
+                        </button>
+                    </div>
+                    <input type="hidden" id="feedback-rating-value" name="rating" value="0">
+                </div>
+                <div class="feedback-form-group">
+                    <label class="feedback-label" for="feedback-category">Category</label>
+                    <select class="feedback-select" id="feedback-category" name="category" required>
+                        <option value="">Select a category</option>
+                        <option value="general">General</option>
+                        <option value="bug">Bug Report</option>
+                        <option value="feature">Feature Request</option>
+                        <option value="course">Course Feedback</option>
+                    </select>
+                </div>
+                <div class="feedback-form-group">
+                    <label class="feedback-label" for="feedback-subject">Subject</label>
+                    <input type="text" class="feedback-input" id="feedback-subject" name="subject" placeholder="Brief description of your feedback" required>
+                </div>
+                <div class="feedback-form-group">
+                    <label class="feedback-label" for="feedback-message">Message</label>
+                    <textarea class="feedback-textarea" id="feedback-message" name="message" rows="6" placeholder="Tell us more about your feedback..." required></textarea>
+                </div>
+                <button type="submit" class="feedback-submit-btn">Submit Feedback</button>
+            </form>
+            <div class="feedback-success hidden" id="feedback-success">
+                <i data-lucide="check-circle"></i>
+                <h3>Thank you for your feedback!</h3>
+                <p>We appreciate you taking the time to share your thoughts with us.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Notifications Page -->
+    <main class="main-container page hidden" id="page-notifications">
+        <div class="notifications-container">
+            <div class="notifications-header">
+                <h1 class="notifications-title">Notifications</h1>
+                <div class="notifications-actions">
+                    <button class="notifications-action-btn" id="mark-all-read-btn">
+                        <i data-lucide="check-double"></i>
+                        Mark all as read
+                    </button>
+                </div>
+            </div>
+            <div class="notifications-list" id="notifications-list">
+                <!-- Notifications will be rendered here -->
+            </div>
+            <div class="notifications-empty hidden" id="notifications-empty">
+                <i data-lucide="bell-off"></i>
+                <h3>No notifications</h3>
+                <p>You're all caught up! Check back later for updates.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Lifetime Analytics Page -->
+    <main class="main-container page hidden" id="page-lifetime-analytics">
+        <div class="lifetime-analytics-container">
+            <div class="lifetime-analytics-header">
+                <button class="lifetime-analytics-back-btn" id="lifetime-analytics-back-btn">
+                    <i data-lucide="chevron-left"></i>
+                    Back to Dashboard
+                </button>
+                <h1 class="lifetime-analytics-title">Lifetime Analytics</h1>
+                <p class="lifetime-analytics-subtitle">Your complete learning journey across all courses</p>
+            </div>
+            <div class="lifetime-streak-badges-section" id="lifetime-streak-badges-section">
+                <!-- Badge levels will be rendered here -->
+            </div>
+            <div class="lifetime-analytics-filter-bar" id="lifetime-analytics-filter-bar">
+                <!-- Filter buttons will be rendered here -->
+            </div>
+            <div class="lifetime-analytics-grid" id="lifetime-analytics-grid">
+                <!-- Analytics cards will be rendered here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Course Detail Page -->
+    <main class="page hidden" id="page-course-detail">
+        <!-- Course Detail Nav -->
+        <nav class="course-detail-nav">
+            <div class="course-detail-nav-container">
+                <div class="course-detail-nav-left">
+                    <button class="course-detail-back-btn" id="course-detail-back-btn">
+                        <i data-lucide="chevron-left"></i>
+                    </button>
+                    <div class="course-detail-nav-divider"></div>
+                    <div class="course-detail-nav-info">
+                        <h1 class="course-detail-nav-title" id="course-detail-title">Course Title</h1>
+                        <p class="course-detail-nav-subtitle" id="course-detail-subtitle">Aggregate Mastery: 0%</p>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="course-detail-layout">
+            <!-- Sidebar -->
+            <aside class="course-detail-sidebar" id="course-detail-sidebar">
+                <div class="course-detail-sidebar-content">
+                    <div class="course-detail-sidebar-section">
+                        <h2 class="course-detail-sidebar-title">Study Hub</h2>
+                        <div class="course-detail-hub-buttons">
+                            <button class="course-detail-hub-btn active" data-view="global-recall" data-hub-type="brain">
+                                <div class="course-detail-hub-btn-icon">
+                                    <i data-lucide="brain"></i>
+                                </div>
+                                <span>Smart Revision</span>
+                            </button>
+                            <button class="course-detail-hub-btn" data-view="test-series" data-hub-type="clipboard">
+                                <div class="course-detail-hub-btn-icon">
+                                    <i data-lucide="clipboard-list"></i>
+                                </div>
+                                <span>Test Series</span>
+                            </button>
+                            <button class="course-detail-hub-btn" data-view="writing" data-hub-type="pen">
+                                <div class="course-detail-hub-btn-icon">
+                                    <i data-lucide="pen-tool"></i>
+                                </div>
+                                <span>Answer Writing</span>
+                            </button>
+                            <button class="course-detail-hub-btn" data-view="analytics" data-hub-type="analytics">
+                                <div class="course-detail-hub-btn-icon">
+                                    <i data-lucide="trending-up"></i>
+                                </div>
+                                <span>Analytics Lab</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="course-detail-sidebar-section course-detail-lessons-section">
+                        <h2 class="course-detail-sidebar-title">Lesson Modules</h2>
+                        <div class="course-detail-lessons-list" id="course-detail-lessons-list">
+                            <!-- Lessons will be rendered here -->
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="course-detail-main" id="course-detail-main">
+                <!-- Lesson View -->
+                <div class="course-detail-view hidden" id="course-detail-view-lesson">
+                    <div class="course-detail-video-container" id="video-player-container">
+                        <video id="course-video-player" class="course-detail-video-element" preload="metadata" crossorigin="anonymous">
+                            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        
+                        <!-- Title Badge -->
+                        <div class="video-title-badge" id="video-title-badge">
+                            <i data-lucide="monitor-play"></i>
+                            <span id="video-title-badge-text">Video</span>
+                        </div>
+                        
+                        <!-- Video Controls Overlay -->
+                        <div class="video-player-controls" id="video-player-controls">
+                            <!-- Progress Bar with Markers -->
+                            <div class="video-progress-container">
+                                <div class="video-progress-track" id="video-progress-track">
+                                    <div class="video-progress-fill" id="video-progress-fill"></div>
+                                    <div class="video-markers" id="video-markers"></div>
+                                    <input type="range" id="video-seek" min="0" max="100" value="0" step="0.1" class="video-seek-input">
+                                </div>
+                            </div>
+                            
+                            <!-- Control Buttons -->
+                            <div class="video-controls-bar">
+                                <div class="video-controls-left">
+                                    <!-- Volume Control -->
+                                    <div class="video-volume-group">
+                                        <button class="video-control-btn" id="video-mute-btn">
+                                            <i data-lucide="volume-2" id="volume-icon"></i>
+                                        </button>
+                                        <div class="video-volume-slider-container">
+                                            <input type="range" id="video-volume" min="0" max="1" step="0.1" value="1" class="video-volume-slider">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Playback Speed -->
+                                    <button class="video-speed-btn" id="video-speed-btn">
+                                        <span id="video-speed-text">1x</span>
+                                    </button>
+                                    
+                                    <!-- Time Display -->
+                                    <span class="video-time" id="video-time">0:00 / 0:00</span>
+                                </div>
+                                
+                                <div class="video-controls-center">
+                                    <!-- Skip Backward -->
+                                    <button class="video-control-btn video-skip-btn" id="video-skip-back">
+                                        <i data-lucide="rotate-ccw"></i>
+                                    </button>
+                                    
+                                    <!-- Play/Pause -->
+                                    <button class="video-play-btn" id="video-play-pause">
+                                        <i data-lucide="play" id="play-pause-icon"></i>
+                                    </button>
+                                    
+                                    <!-- Skip Forward -->
+                                    <button class="video-control-btn video-skip-btn" id="video-skip-forward">
+                                        <i data-lucide="rotate-cw"></i>
+                                    </button>
+                                </div>
+                                
+                                <div class="video-controls-right">
+                                    <!-- Fullscreen -->
+                                    <button class="video-control-btn" id="video-fullscreen-btn">
+                                        <i data-lucide="maximize" id="fullscreen-icon"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Add Button (FAB) -->
+                        <button class="video-add-fab" id="video-add-btn">
+                            <i data-lucide="plus"></i>
+                        </button>
+                        <!-- Add Menu -->
+                        <div class="video-add-menu hidden" id="video-add-menu">
+                            <button class="video-add-menu-item" data-type="flashcard">
+                                <div class="video-add-menu-icon video-add-menu-icon-flashcard">
+                                    <i data-lucide="zap"></i>
+                                </div>
+                                <span>Add Flashcard</span>
+                            </button>
+                            <button class="video-add-menu-item" data-type="note">
+                                <div class="video-add-menu-icon video-add-menu-icon-note">
+                                    <i data-lucide="file-text"></i>
+                                </div>
+                                <span>Add Note</span>
+                            </button>
+                            <button class="video-add-menu-item" data-type="mcq">
+                                <div class="video-add-menu-icon video-add-menu-icon-mcq">
+                                    <i data-lucide="help-circle"></i>
+                                </div>
+                                <span>Add MCQ</span>
+                            </button>
+                        </div>
+                        <!-- Content Creation Modal -->
+                        <div class="video-content-modal hidden" id="video-content-modal">
+                            <div class="video-content-modal-content">
+                                <div class="video-content-modal-header">
+                                    <h3 id="modal-title">Add Content</h3>
+                                    <button class="video-modal-close" id="modal-close">
+                                        <i data-lucide="x"></i>
+                                    </button>
+                                </div>
+                                <div class="video-content-modal-body" id="modal-body">
+                                    <!-- Content will be dynamically inserted here -->
+                                </div>
+                                <div class="video-content-modal-footer">
+                                    <button class="video-modal-btn video-modal-btn-cancel" id="modal-cancel">Cancel</button>
+                                    <button class="video-modal-btn video-modal-btn-save" id="modal-save">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Video Title and Description -->
+                    <div class="course-detail-video-info" id="course-detail-video-info">
+                        <h2 class="course-detail-lesson-title" id="course-detail-video-title"></h2>
+                        <p class="course-detail-lesson-description" id="course-detail-video-description"></p>
+                    </div>
+                    <div class="course-detail-lesson-content">
+                        <div class="course-detail-tabs">
+                            <button class="course-detail-tab active" data-tab="flashcards">
+                                <i data-lucide="brain"></i>
+                                <span>Flashcards</span>
+                                <span class="course-detail-tab-count" id="lesson-flashcards-count">0</span>
+                            </button>
+                            <button class="course-detail-tab" data-tab="quiz">
+                                <i data-lucide="zap"></i>
+                                <span>Practice Quiz</span>
+                                <span class="course-detail-tab-count" id="lesson-mcqs-count">0</span>
+                            </button>
+                            <button class="course-detail-tab" data-tab="notes">
+                                <i data-lucide="file-text"></i>
+                                <span>Notes</span>
+                            </button>
+                        </div>
+                        <div class="course-detail-tab-content" id="course-detail-tab-content">
+                            <!-- Tab content will be rendered here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Smart Revision View -->
+                <div class="course-detail-view" id="course-detail-view-global-recall">
+                    <div class="course-detail-view-header">
+                        <div class="course-detail-view-icon course-detail-view-icon-indigo">
+                            <i data-lucide="brain"></i>
+                        </div>
+                        <h2 class="course-detail-view-title">Smart Revision Engine</h2>
+                    </div>
+                    <div class="course-detail-revision-mode-selector" id="course-detail-revision-mode-selector">
+                        <!-- Mode selection will be rendered here -->
+                    </div>
+                    <div class="course-detail-revision-session hidden" id="course-detail-revision-session">
+                        <div class="course-detail-revision-header">
+                            <div class="course-detail-revision-header-left">
+                                <button class="course-detail-revision-back-btn" id="course-detail-revision-back-btn">
+                                    <i data-lucide="chevron-left"></i>
+                                </button>
+                                <div class="course-detail-revision-header-divider"></div>
+                                <h3 class="course-detail-revision-session-title" id="course-detail-revision-session-title">All Flashcards</h3>
+                            </div>
+                            <button class="course-detail-change-mode-btn" id="course-detail-change-mode-btn">Change Mode</button>
+                        </div>
+                        <div class="course-detail-filter-bar" id="course-detail-filter-bar">
+                            <!-- Filter bar will be rendered here -->
+                        </div>
+                        <div class="course-detail-revision-content" id="course-detail-revision-content">
+                            <!-- Revision content will be rendered here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Answer Writing View -->
+                <div class="course-detail-view hidden" id="course-detail-view-writing">
+                    <div class="course-detail-view-header">
+                        <div class="course-detail-view-icon course-detail-view-icon-emerald">
+                            <i data-lucide="pen-tool"></i>
+                        </div>
+                        <h2 class="course-detail-view-title">Writing Lab</h2>
+                    </div>
+                    <div class="course-detail-filter-bar" id="course-detail-writing-filter-bar">
+                        <!-- Filter bar will be rendered here -->
+                    </div>
+                    <div class="course-detail-writing-content" id="course-detail-writing-content">
+                        <!-- Writing questions will be rendered here -->
+                    </div>
+                </div>
+
+                <!-- Writing Session Modal -->
+                <div class="writing-session-modal hidden" id="writing-session-modal">
+                    <div class="writing-session-modal-content">
+                        <div class="writing-session-modal-header">
+                            <div class="writing-session-timer" id="writing-session-timer">00:00</div>
+                            <button class="writing-session-close" id="writing-session-close">
+                                <i data-lucide="x"></i>
+                            </button>
+                        </div>
+                        <div class="writing-session-modal-body">
+                            <div class="writing-session-question-card">
+                                <div class="writing-session-badges" id="writing-session-badges">
+                                    <!-- Badges will be inserted here -->
+                                </div>
+                                <h3 class="writing-session-question" id="writing-session-question"></h3>
+                            </div>
+                            <div class="writing-session-input-container">
+                                <textarea 
+                                    class="writing-session-input" 
+                                    id="writing-session-input" 
+                                    placeholder="Start writing your answer here..."
+                                ></textarea>
+                                <div class="writing-session-word-count" id="writing-session-word-count">0 words</div>
+                            </div>
+                        </div>
+                        <div class="writing-session-modal-footer">
+                            <button class="writing-session-btn writing-session-btn-cancel" id="writing-session-cancel">Cancel</button>
+                            <button class="writing-session-btn writing-session-btn-submit" id="writing-session-submit">Submit Answer</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics View -->
+                <div class="course-detail-view hidden" id="course-detail-view-analytics">
+                    <div class="course-detail-view-header">
+                        <div class="course-detail-view-icon course-detail-view-icon-indigo">
+                            <i data-lucide="trending-up"></i>
+                        </div>
+                        <h2 class="course-detail-view-title">Analytics Lab</h2>
+                    </div>
+                    <div class="course-detail-filter-bar" id="course-detail-analytics-filter-bar">
+                        <!-- Filter bar will be rendered here -->
+                    </div>
+                    <div class="course-detail-analytics-grid" id="course-detail-analytics-grid">
+                        <!-- Analytics cards will be rendered here -->
+                    </div>
+                    <div id="course-detail-leaderboard-container">
+                        <!-- Leaderboard will be rendered here -->
+                    </div>
+                </div>
+
+                <!-- Test Series View -->
+                <div class="course-detail-view hidden" id="course-detail-view-test-series">
+                    <div class="course-detail-view-header">
+                        <div class="course-detail-view-icon course-detail-view-icon-orange">
+                            <i data-lucide="clipboard-list"></i>
+                        </div>
+                        <h2 class="course-detail-view-title">Full Test Series</h2>
+                    </div>
+                    <div class="course-detail-test-performance-section" id="course-detail-test-performance-section">
+                        <!-- Performance cards and charts will be rendered here -->
+                    </div>
+                    <div class="course-detail-test-series-grid" id="course-detail-test-series-grid">
+                        <!-- Test series cards will be rendered here -->
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button class="course-detail-mobile-menu-btn" id="course-detail-mobile-menu-btn">
+            <i data-lucide="book-open"></i>
+        </button>
+    </main>
+
+    <!-- Community Course Detail Page -->
+    <main class="page hidden" id="page-community-course-detail">
+        <div class="community-course-detail-container">
+            <nav class="community-course-detail-nav">
+                <div class="community-course-detail-nav-container">
+                    <button class="community-course-detail-back-btn" id="community-course-detail-back-btn">
+                        <i data-lucide="chevron-left"></i>
+                        Back to Courses
+                    </button>
+                </div>
+            </nav>
+            <div class="community-course-detail-content">
+                <!-- Content will be rendered here by JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Test Interface Page -->
+    <main class="page hidden" id="page-test-interface">
+        <div class="test-interface-container">
+            <!-- Top Bar -->
+            <div class="test-top-bar">
+                <div class="test-top-bar-left">
+                    <h2 class="test-question-number">Question No. <span id="test-current-question-num">1</span></h2>
+                </div>
+                <div class="test-top-bar-right">
+                    <div class="test-status-info">
+                        <span class="test-attempted">Attempted: <span id="test-attempted-count">0</span>/<span id="test-total-questions">50</span></span>
+                        <span class="test-points">+2</span>
+                        <div class="test-timer" id="test-timer">60:00</div>
+                        <button class="test-report-btn" id="test-report-btn">Report</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="test-progress-container">
+                <div class="test-progress-info">
+                    <span><span id="test-completed-count">0</span>/<span id="test-total-questions-progress">50</span></span>
+                    <span>Remaining: <span id="test-remaining-count">50</span></span>
+                </div>
+                <div class="test-progress-bar">
+                    <div class="test-progress-fill" id="test-progress-fill"></div>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="test-main-layout">
+                <!-- Left: Question Content -->
+                <div class="test-content-area">
+                    <div class="test-question-header">
+                        <div class="test-completed-indicator">
+                            <span class="test-completed-dot"></span>
+                            <span>Completed: <span id="test-completed-indicator-count">0</span></span>
+                        </div>
+                    </div>
+                    <div class="test-question-content">
+                        <div class="test-question-text" id="test-question-text">
+                            <!-- Question text will be rendered here -->
+                        </div>
+                        <div class="test-options-container" id="test-options-container">
+                            <!-- Options will be rendered here -->
+                        </div>
+                        <!-- Navigation Buttons -->
+                        <div class="test-question-nav-buttons">
+                            <button class="test-nav-btn test-nav-btn-secondary" id="test-mark-review-btn">Mark for Review and Next</button>
+                            <button class="test-nav-btn test-nav-btn-secondary" id="test-clear-btn">Clear Response</button>
+                            <button class="test-nav-btn test-nav-btn-primary" id="test-next-btn">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Sidebar -->
+                <div class="test-sidebar">
+                    <!-- Legend -->
+                    <div class="test-legend">
+                        <h3 class="test-legend-title">Legend</h3>
+                        <div class="test-legend-items">
+                            <div class="test-legend-item">
+                                <span class="test-legend-dot test-legend-dot-answered"></span>
+                                <span>Answered</span>
+                            </div>
+                            <div class="test-legend-item">
+                                <span class="test-legend-dot test-legend-dot-marked"></span>
+                                <span>Marked for review</span>
+                            </div>
+                            <div class="test-legend-item">
+                                <span class="test-legend-dot test-legend-dot-not-visited"></span>
+                                <span>Not Visited</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question Palette -->
+                    <div class="test-palette">
+                        <h3 class="test-palette-title">Question Palette</h3>
+                        <div class="test-palette-grid" id="test-palette-grid">
+                            <!-- Question numbers will be rendered here -->
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="test-action-buttons">
+                        <button class="test-action-btn test-action-btn-secondary" id="test-view-paper-btn">View Question Paper</button>
+                        <button class="test-action-btn test-action-btn-primary" id="test-submit-btn">Submit Test</button>
+                        <button class="test-action-btn test-action-btn-danger" id="test-exit-btn">Exit Test Series</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Revision Queue Page -->
+    <main class="page hidden" id="page-revision-queue">
+        <div class="revision-queue-container">
+            <!-- Course Selection View -->
+            <div class="revision-queue-course-selection" id="revision-queue-course-selection">
+                <div class="revision-queue-header">
+                    <button class="revision-queue-back-btn" id="revision-queue-back-btn">
+                        <i data-lucide="chevron-left"></i>
+                        Back to Courses
+                    </button>
+                    <h1 class="revision-queue-title">Select Course for Revision</h1>
+                    <p class="revision-queue-subtitle">Choose a course to review due flashcards and MCQs</p>
+                </div>
+                <div class="revision-queue-courses-grid" id="revision-queue-courses-grid">
+                    <!-- Course cards will be rendered here -->
+                </div>
+            </div>
+
+            <!-- Revision Session View -->
+            <div class="revision-queue-session hidden" id="revision-queue-session">
+                <div class="revision-queue-session-header">
+                    <button class="revision-queue-session-back-btn" id="revision-queue-session-back-btn">
+                        <i data-lucide="chevron-left"></i>
+                    </button>
+                    <div class="revision-queue-session-title-wrapper">
+                        <h2 class="revision-queue-session-title" id="revision-queue-session-title">Revision Session</h2>
+                        <p class="revision-queue-session-course" id="revision-queue-session-course"></p>
+                    </div>
+                </div>
+                <div class="revision-queue-mode-selector">
+                    <button class="revision-queue-mode-btn active" data-mode="flashcards" id="revision-queue-mode-flashcards">
+                        <i data-lucide="brain"></i>
+                        <span>Flashcards</span>
+                        <span class="revision-queue-mode-count" id="revision-queue-flashcards-count">0</span>
+                    </button>
+                    <button class="revision-queue-mode-btn" data-mode="mcqs" id="revision-queue-mode-mcqs">
+                        <i data-lucide="zap"></i>
+                        <span>MCQs</span>
+                        <span class="revision-queue-mode-count" id="revision-queue-mcqs-count">0</span>
+                    </button>
+                </div>
+                <div class="revision-queue-content" id="revision-queue-content">
+                    <!-- Revision content will be rendered here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Course Validity Modal -->
+    <div class="course-validity-modal hidden" id="course-validity-modal">
+        <div class="course-validity-modal-content">
+            <div class="course-validity-modal-header">
+                <h3>Course Validity</h3>
+                <button class="course-validity-modal-close" id="course-validity-modal-close">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div class="course-validity-modal-body" id="course-validity-modal-body">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Lifetime Achievements Modal -->
+    <div class="lifetime-achievements-modal hidden" id="lifetime-achievements-modal">
+        <div class="lifetime-achievements-modal-overlay"></div>
+        <div class="lifetime-achievements-modal-content">
+            <div class="lifetime-achievements-modal-header">
+                <h2 class="lifetime-achievements-modal-title">All Achievements</h2>
+                <button class="lifetime-achievements-modal-close" id="lifetime-achievements-modal-close">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div class="lifetime-achievements-modal-body" id="lifetime-achievements-modal-content">
+                <!-- Achievements will be rendered here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Report MCQ Modal -->
+    <div class="report-mcq-modal hidden" id="report-mcq-modal">
+        <div class="report-mcq-modal-content">
+            <div class="report-mcq-modal-header">
+                <h3>Report Question</h3>
+                <button class="report-mcq-modal-close" id="report-mcq-modal-close">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div class="report-mcq-modal-body" id="report-mcq-modal-body">
+                <div class="report-mcq-option">
+                    <input type="radio" id="report-wrong-category" name="report-reason" value="wrong-category">
+                    <label for="report-wrong-category">Wrong category</label>
+                </div>
+                <div class="report-mcq-option">
+                    <input type="radio" id="report-answer-incorrect" name="report-reason" value="answer-incorrect">
+                    <label for="report-answer-incorrect">Answer is incorrect</label>
+                </div>
+                <div class="report-mcq-option">
+                    <input type="radio" id="report-incomplete-question" name="report-reason" value="incomplete-question">
+                    <label for="report-incomplete-question">Incomplete question</label>
+                </div>
+                <div class="report-mcq-option">
+                    <input type="radio" id="report-mistake-question" name="report-reason" value="mistake-question">
+                    <label for="report-mistake-question">Mistake in question</label>
+                </div>
+                <div class="report-mcq-option">
+                    <input type="radio" id="report-mistake-options" name="report-reason" value="mistake-options">
+                    <label for="report-mistake-options">Mistake in options</label>
+                </div>
+                <div class="report-mcq-option">
+                    <input type="radio" id="report-poorly-formatted-question" name="report-reason" value="poorly-formatted-question">
+                    <label for="report-poorly-formatted-question">Poorly formatted question</label>
+                </div>
+                <div class="report-mcq-option">
+                    <input type="radio" id="report-poorly-formatted-options" name="report-reason" value="poorly-formatted-options">
+                    <label for="report-poorly-formatted-options">Poorly formatted options</label>
+                </div>
+                <div class="report-mcq-option">
+                    <input type="radio" id="report-other" name="report-reason" value="other">
+                    <label for="report-other">Other</label>
+                </div>
+                <div class="report-mcq-other-input hidden" id="report-mcq-other-input">
+                    <textarea id="report-mcq-other-text" placeholder="Please describe the issue..." rows="3"></textarea>
+                </div>
+            </div>
+            <div class="report-mcq-modal-footer">
+                <button class="report-mcq-submit-btn" id="report-mcq-submit-btn">Submit Feedback</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Decorative Background Glows -->
+    <div class="bg-glows">
+        <div class="bg-glow bg-glow-1"></div>
+        <div class="bg-glow bg-glow-2"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <div class="footer-links">
+                        <a href="#" class="footer-link">Dashboard</a>
+                        <a href="#" class="footer-link">Why it Works</a>
+                        <a href="#" class="footer-link">About Spaced Revision</a>
+                        <a href="#" class="footer-link">Contact Us</a>
+                        <a href="#" class="footer-link">Terms of Use</a>
+                        <a href="#" class="footer-link">Privacy Policy</a>
+                    </div>
+                    <p class="footer-copyright">© 2026 Spaced Revision. All Rights Reserved. Made with ❤️ and Science.</p>
+                </div>
+                <div class="footer-right">
+                    <div class="footer-social">
+                        <a href="#" class="social-icon" aria-label="Facebook">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" fill="currentColor"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="Instagram">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="3" y="3" width="18" height="18" rx="4" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                <circle cx="17" cy="7" r="1" fill="currentColor"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="WhatsApp">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" fill="currentColor"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="YouTube">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="currentColor"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Test General Instructions Modal -->
+    <div class="test-instructions-modal hidden" id="test-instructions-modal">
+        <div class="test-instructions-modal-content">
+            <div class="test-instructions-modal-header">
+                <h3>General Instructions</h3>
+            </div>
+            <div class="test-instructions-modal-body" id="test-instructions-modal-body">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+            <div class="test-instructions-modal-footer">
+                <button class="test-instructions-btn test-instructions-btn-exit" id="test-instructions-exit-btn">Cancel</button>
+                <button class="test-instructions-btn test-instructions-btn-start" id="test-instructions-start-btn">Start Test</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
