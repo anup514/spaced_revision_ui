@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: #275656;
+    --color-primary-light: #4a8a8a;
+    --color-bg-light: #f8fafc;
+    --color-bg-dark: #050505;
+    --color-card-light: #ffffff;
+    --color-card-dark: #0d1b1b;
+    --color-nav-light: rgba(255, 255, 255, 0.8);
+    --color-nav-dark: rgba(10, 10, 13, 0.8);
+    --color-text-primary-light: #0f172a;
+    --color-text-primary-dark: #ffffff;
+    --color-text-secondary-light: #64748b;
+    --color-text-secondary-dark: #94a3b8;
+    --color-border-light: #e2e8f0;
+    --color-border-dark: rgba(255, 255, 255, 0.05);
+  }
+  
+  * {
+    @apply box-border;
+  }
+  
+  body {
+    @apply font-sans min-h-screen transition-colors duration-500;
+    background-color: var(--color-bg-light);
+    color: var(--color-text-primary-light);
+  }
+  
+  body.dark {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-primary-dark);
+  }
+}
+
+@layer utilities {
+  .backdrop-blur-nav {
+    backdrop-filter: blur(12px);
+  }
+  
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+  
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+  
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+}
